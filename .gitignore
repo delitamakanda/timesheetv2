@@ -135,6 +135,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+timesheetv2/
 
 # Spyder project settings
 .spyderproject
@@ -145,7 +146,7 @@ venv.bak/
 
 # mkdocs documentation
 /site
-
+.idea
 # mypy
 .mypy_cache/
 .dmypy.json
