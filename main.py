@@ -1,7 +1,11 @@
-from fastapi import FastAPI
+import uvicorn
 
-app = FastAPI()
+from core.config import config
 
-@app.get('/')
-def read_root():
-    return {'message': 'Welcome to the API!'}
+if __name__ == "__main__":
+    uvicorn.run(
+        app="core.server:app",
+        reload=True if config.ENVIRONMENT != "production" else False,
+        workers=1,
+    )
+    
