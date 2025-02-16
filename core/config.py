@@ -28,6 +28,7 @@ class Config(BaseConfig):
     ALLOWED_EMAIL_DOMAINS: List[str] = ["example.com"]
     ALLOWED_ROLES: List[str] = ["standard", "admin", "manager"]
     REDIS_URL: str = "redis://localhost:6379/0"
+    RELEASE_VERSION: str = "1.0.0"
     
     class Config:
         case_sensitive = True
