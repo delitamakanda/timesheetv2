@@ -1,6 +1,5 @@
 from typing import List
 
-from pydantic import AnyHttpUrl
 from enum import Enum
 
 from pydantic.v1 import BaseSettings
@@ -28,6 +27,7 @@ class Config(BaseConfig):
     CORS_ORIGINS: List[str] = ["*"]
     ALLOWED_EMAIL_DOMAINS: List[str] = ["example.com"]
     ALLOWED_ROLES: List[str] = ["standard", "admin", "manager"]
+    REDIS_URL: str = "redis://localhost:6379/0"
     
     class Config:
         case_sensitive = True
