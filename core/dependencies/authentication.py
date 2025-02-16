@@ -5,7 +5,7 @@ from core.exceptions.base import CustomException
 
 class BearerAuthError(CustomException):
     code = status.HTTP_401_UNAUTHORIZED
-    message = status.HTTP_401_UNAUTHORIZED.description
+    message = "Authentication required"
     error_code = status.HTTP_401_UNAUTHORIZED
     
 class AuthenticationRequired:
