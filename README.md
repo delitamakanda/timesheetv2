@@ -8,8 +8,7 @@ Timesheet Fastapi microservices
 uvicorn core.server:app --reload
 ```
 
-## Models
-# Modèles de données
+## Data Models
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
@@ -40,3 +39,6 @@ class Timesheet(Base):
     date = Column(Date)
     hours = Column(Float)
     sap_code = Column(String)
+
+## Demo
+![Demo](127.0.0.1_8000_docs.png)
