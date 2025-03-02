@@ -7,6 +7,17 @@ Timesheet Fastapi microservices
 ```bash
 uvicorn core.server:app --reload
 ```
+### init alembic
+```bash
+alembic upgrade head
+```
+
+### autogenerate models
+```bash
+alembic revision --autogenerate -m "initial models"
+```
+
+
 
 ## Data Models
 class User(Base):
