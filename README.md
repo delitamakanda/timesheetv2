@@ -7,7 +7,7 @@ Timesheet Fastapi microservices
 ```bash
 uvicorn core.server:app --reload
 ```
-### init alembic
+### apply migrations
 ```bash
 alembic upgrade head
 ```

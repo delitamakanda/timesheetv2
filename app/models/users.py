@@ -25,6 +25,7 @@ class User(Base, TimestampMixin):
     username = Column(Unicode(255), unique=True, nullable=False)
     is_active = Column(Boolean, default=True, nullable=False)
     is_superuser = Column(Boolean, default=False, nullable=False)
+    tasks = relationship('Task', back_populates='user', lazy="raise")
     
     __mapper_args__ = {'eager_defaults': True}
     
