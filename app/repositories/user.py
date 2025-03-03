@@ -48,7 +48,8 @@ class UserRepository(BaseRepository[User]):
         
         return await self._one_or_none(query)
     
-    def _join_tasks(self, query: Select) -> Select:
+    @staticmethod
+    def _join_tasks(query: Select) -> Select:
         """
         Join tasks.
 

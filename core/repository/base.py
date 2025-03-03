@@ -61,12 +61,13 @@ class BaseRepository(Generic[ModelType]):
         """
         Returns the model instance matching the field and value.
 
+        :param unique:
         :param field: The field to match.
         :param value: The value to match.
         :param join_: The joins to make.
         :return: The model instance.
         """
-        query = self._query(join_)
+        query = await self._query(join_)
         query = await self._get_by(query, field, value)
         
         if join_ is not None:
@@ -85,7 +86,7 @@ class BaseRepository(Generic[ModelType]):
         """
         self.session.delete(model)
     
-    def _query(
+    async def _query(
             self,
             join_: set[str] | None = None,
             order_: dict | None = None,

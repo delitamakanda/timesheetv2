@@ -24,18 +24,18 @@ class AuthController(BaseController[User]):
             raise BadRequestException("Username already taken")
         
         password = PasswordManager.hash_password(password)
-        return {
+        return await self.user_repo.create({
             "email": email,
             "username": username,
-            "password": password,
-        }
+            "password_hash": password,
+        })
     
     async def login(self, email: EmailStr, password: str) -> Token:
         user = await  self.user_repo.get_by_email(email)
         if not user:
-            raise UnauthorizedException("Invalid email or password")
-        if not PasswordManager.verify_password(password, user.password):
-            raise UnauthorizedException("Invalid email or password")
+            raise BadRequestException("Invalid email or password")
+        if not PasswordManager.verify_password(user.password_hash, password):
+            raise BadRequestException("Invalid email or password")
         return Token(
             access_token=JWTManager.encode(payload={"user_id": user.id}),
             refresh_token=JWTManager.encode(payload={"sub": "refresh_token"})
