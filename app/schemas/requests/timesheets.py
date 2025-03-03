@@ -3,5 +3,5 @@ from pydantic import BaseModel
 
 class TimesheetCreate(BaseModel):
     task_id: int
-    date: date
+    date: str
     hours: float
