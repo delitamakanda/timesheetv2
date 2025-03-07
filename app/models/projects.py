@@ -35,7 +35,7 @@ class Project(Base, TimestampMixin):
         all_permissions = list(ProjectPermission)
         return [
             (Allow, Authenticated, basic_permissions),
-            (Allow, UserPrincipal(self.created_by), self_permissions),
-            (Allow, RolePrincipal('admin'), all_permissions),
+            (Allow, UserPrincipal(value=self.created_by), self_permissions),
+            (Allow, RolePrincipal(value='admin'), all_permissions),
         ]
     

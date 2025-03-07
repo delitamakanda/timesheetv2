@@ -35,7 +35,7 @@ class Timesheet(Base, TimestampMixin):
         all_permissions = list(TimesheetPermission)
         return [
             (Allow, Authenticated, basic_permissions),
-            (Allow, UserPrincipal(self.user_id), self_permissions),
-            (Allow, RolePrincipal('admin'), all_permissions),
+            (Allow, UserPrincipal(value=self.user_id), self_permissions),
+            (Allow, RolePrincipal(value='admin'), all_permissions),
         ]
     
