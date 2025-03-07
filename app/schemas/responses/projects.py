@@ -6,4 +6,4 @@ class ProjectResponse(BaseModel):
     description: str = Field(..., example='This is an example project.')
     
     class Config:
-        orm_mode = True
+        from_attributes = True

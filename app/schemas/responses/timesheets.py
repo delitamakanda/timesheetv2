@@ -9,4 +9,4 @@ class TimesheetResponse(BaseModel):
     sap_code: str = Field(..., example='ABC123')
     
     class Config:
-        orm_mode = True
+        from_attributes = True

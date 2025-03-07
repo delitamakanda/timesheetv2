@@ -8,4 +8,4 @@ class TaskResponse(BaseModel):
     assigned_to: int = Field(..., example=1)
     
     class Config:
-        orm_mode = True
+        from_attributes = True
