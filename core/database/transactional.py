@@ -19,12 +19,14 @@ class Transactional:
             try:
                 if self.propagation == Propagation.REQUIRED:
                     result = await self._run_required(
+                        self=self,
                         function=function,
                         args=args,
                         kwargs=kwargs,
                     )
                 elif self.propagation == Propagation.REQUIRED_NEW:
                     result = await self._run_required_new(
+                        self=self,
                         function=function,
                         args=args,
                         kwargs=kwargs,
@@ -44,13 +46,13 @@ class Transactional:
         return decorator
 
     @staticmethod
-    async def _run_required(function, args, kwargs) -> None:
+    async def _run_required(self, function, args, kwargs) -> None:
         result = await function(*args, **kwargs)
         await session.commit()
         return result
 
     @staticmethod
-    async def _run_required_new(function, args, kwargs) -> None:
+    async def _run_required_new(self, function, args, kwargs) -> None:
         session.begin()
         result = await function(*args, **kwargs)
         await session.commit()
