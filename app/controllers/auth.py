@@ -10,7 +10,7 @@ from core.security import JWTManager, PasswordManager
 
 class AuthController(BaseController[User]):
     def __init__(self, user_repo: UserRepository):
-        super().__init__(User, user_repo)
+        super().__init__(model=User, repository=user_repo)
         self.user_repo = user_repo
     
     @Transactional(propagation=Propagation.REQUIRED)
@@ -25,7 +25,7 @@ class AuthController(BaseController[User]):
         
         password = PasswordManager.hash_password(password)
         return await self.user_repo.create({
-            "email": email,
+            "email": str(email),
             "username": username,
             "password_hash": password,
         })

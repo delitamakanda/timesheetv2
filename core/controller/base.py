@@ -68,7 +68,7 @@ class BaseController(Generic[ModelType]):
         :return: A list of records.
         """
 
-        response = await self.repository.get_all(skip, limit, join_)
+        response = await self.repository.get_all(skip=skip, limit=limit, join_=join_)
         return response
 
     @Transactional(propagation=Propagation.REQUIRED)
@@ -105,4 +105,4 @@ class BaseController(Generic[ModelType]):
         :return: The attributes.
         """
 
-        return await schema.dict(exclude=excludes, exclude_unset=True)
+        return await schema.model_dump(exclude=excludes, exclude_unset=True)
