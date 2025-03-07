@@ -2,6 +2,7 @@ from pydantic import BaseModel, EmailStr, constr
 import re
 
 from pydantic.v1 import validator
+from pydantic import constr, EmailStr, BaseModel
 
 
 class UserCreate(BaseModel):
