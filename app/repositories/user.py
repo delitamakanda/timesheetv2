@@ -5,6 +5,7 @@ from sqlalchemy.orm import joinedload
 
 from app.models import User
 from core.repository import BaseRepository
+from pydantic import EmailStr
 
 
 class UserRepository(BaseRepository[User]):
@@ -31,7 +32,7 @@ class UserRepository(BaseRepository[User]):
         return await self._one_or_none(query)
     
     async def get_by_email(
-            self, email: str, join_: set[str] | None = None
+            self, email: EmailStr, join_: set[str] | None = None
     ) -> User | None:
         """
         Get user by email.
@@ -41,7 +42,7 @@ class UserRepository(BaseRepository[User]):
         :return: User.
         """
         query = await self._query(join_)
-        query = query.filter(User.email == email)
+        query = query.filter(User.email == str(email))
         
         if join_ is not None:
             return await self.all_unique(query)

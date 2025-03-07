@@ -43,7 +43,7 @@ class BaseRepository(Generic[ModelType]):
         :param join_: The joins to make.
         :return: A list of model instances.
         """
-        query = self._query(join_)
+        query = await self._query(join_)
         query = query.offset(skip).limit(limit)
         
         if join_ is not None:
@@ -71,7 +71,7 @@ class BaseRepository(Generic[ModelType]):
         query = await self._get_by(query, field, value)
         
         if join_ is not None:
-            return await self.all_unique(query)
+            return await self._all_unique(query)
         if unique:
             return await self._one(query)
         
