@@ -1,8 +1,8 @@
 """initial migration
 
-Revision ID: 94dc93de8e43
+Revision ID: 43c2c789eb79
 Revises: 
-Create Date: 2025-03-07 22:15:11.820856
+Create Date: 2025-03-09 22:29:42.854704
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '94dc93de8e43'
+revision: str = '43c2c789eb79'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -36,11 +36,11 @@ def upgrade() -> None:
     sa.UniqueConstraint('uuid')
     )
     op.create_table('projects',
-    sa.Column('id', sa.BigInteger(), autoincrement=True, nullable=False),
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('uuid', sa.Unicode(length=255), nullable=False),
     sa.Column('name', sa.Unicode(length=255), nullable=False),
     sa.Column('description', sa.Unicode(length=255), nullable=False),
-    sa.Column('created_by', sa.BigInteger(), nullable=False),
+    sa.Column('created_by', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['created_by'], ['users.id'], ),
@@ -48,12 +48,12 @@ def upgrade() -> None:
     sa.UniqueConstraint('uuid')
     )
     op.create_table('tasks',
-    sa.Column('id', sa.BigInteger(), autoincrement=True, nullable=False),
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('uuid', sa.Unicode(length=255), nullable=False),
     sa.Column('title', sa.Unicode(length=255), nullable=False),
     sa.Column('description', sa.Unicode(length=255), nullable=False),
-    sa.Column('user_id', sa.BigInteger(), nullable=False),
-    sa.Column('project_id', sa.BigInteger(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('project_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['project_id'], ['projects.id'], ),
@@ -62,10 +62,10 @@ def upgrade() -> None:
     sa.UniqueConstraint('uuid')
     )
     op.create_table('timesheets',
-    sa.Column('id', sa.BigInteger(), autoincrement=True, nullable=False),
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('uuid', sa.Unicode(length=255), nullable=False),
-    sa.Column('user_id', sa.BigInteger(), nullable=False),
-    sa.Column('task_id', sa.BigInteger(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('task_id', sa.Integer(), nullable=False),
     sa.Column('date', sa.Date(), nullable=False),
     sa.Column('hours_worked', sa.Float(), nullable=False),
     sa.Column('sap_hours', sa.String(), nullable=False),

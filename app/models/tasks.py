@@ -1,11 +1,11 @@
 from enum import Enum
 from uuid import uuid4
-from sqlalchemy import Column, Boolean, Unicode, BigInteger, Integer, ForeignKey
+from sqlalchemy import Column, Unicode, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 from core.database import Base
 from core.database.mixins import TimestampMixin
-from core.security.access_control import Allow, Everyone, RolePrincipal, UserPrincipal, Authenticated
+from core.security.access_control import Allow, RolePrincipal, UserPrincipal, Authenticated
 
 
 class TaskPermission(Enum):
@@ -18,12 +18,12 @@ class TaskPermission(Enum):
 class Task(Base, TimestampMixin):
     __tablename__ = 'tasks'
     
-    id = Column(BigInteger, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     uuid = Column(Unicode(255), unique=True, default=lambda: str(uuid4()), nullable=False)
     title = Column(Unicode(255), nullable=False)
     description = Column(Unicode(255), nullable=False)
-    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)
-    project_id = Column(BigInteger, ForeignKey('projects.id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    project_id = Column(Integer, ForeignKey('projects.id'), nullable=False)
     
     user = relationship('User', back_populates='tasks', uselist=False, lazy="raise")
     

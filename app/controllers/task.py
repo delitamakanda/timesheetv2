@@ -19,6 +19,6 @@ class TaskController(BaseController[Task]):
         return await self.repository.create({
             'title': title,
             'description': description,
-            'assigned_to': user_id,
+            'user_id': user_id,
             'project_id': project_id
         })

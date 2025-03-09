@@ -1,11 +1,10 @@
 from enum import Enum
 from uuid import uuid4
-from sqlalchemy import Column, Boolean, Unicode, BigInteger, Integer, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Unicode, Integer, ForeignKey
 
 from core.database import Base
 from core.database.mixins import TimestampMixin
-from core.security.access_control import Allow, Everyone, RolePrincipal, UserPrincipal, Authenticated
+from core.security.access_control import Allow, RolePrincipal, UserPrincipal, Authenticated
 
 class ProjectPermission(Enum):
     create = 'create'
@@ -18,11 +17,11 @@ class ProjectPermission(Enum):
 class Project(Base, TimestampMixin):
     __tablename__ = 'projects'
     
-    id = Column(BigInteger, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     uuid = Column(Unicode(255), unique=True, default=lambda: str(uuid4()), nullable=False)
     name = Column(Unicode(255), nullable=False)
     description = Column(Unicode(255), nullable=False)
-    created_by = Column(BigInteger, ForeignKey('users.id'), nullable=False)
+    created_by = Column(Integer, ForeignKey('users.id'), nullable=False)
     
     __mapper_args__ = { 'eager_defaults': True}
     def __acl__(self):

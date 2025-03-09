@@ -1,11 +1,10 @@
 from enum import Enum
 from uuid import uuid4
-from sqlalchemy import Column, Boolean, Unicode, BigInteger, Integer, ForeignKey, Float, Date, String
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Unicode, Integer, ForeignKey, Float, Date, String
 
 from core.database import Base
 from core.database.mixins import TimestampMixin
-from core.security.access_control import Allow, Everyone, RolePrincipal, UserPrincipal, Authenticated
+from core.security.access_control import Allow, RolePrincipal, UserPrincipal, Authenticated
 
 class TimesheetPermission(Enum):
     create = 'create'
@@ -16,10 +15,10 @@ class TimesheetPermission(Enum):
 class Timesheet(Base, TimestampMixin):
     __tablename__ = 'timesheets'
     
-    id = Column(BigInteger, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     uuid = Column(Unicode(255), unique=True, default=lambda: str(uuid4()), nullable=False)
-    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)
-    task_id = Column(BigInteger, ForeignKey('tasks.id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    task_id = Column(Integer, ForeignKey('tasks.id'), nullable=False)
     date = Column(Date, nullable=False)
     hours_worked = Column(Float, nullable=False)
     sap_hours = Column(String, nullable=False)
