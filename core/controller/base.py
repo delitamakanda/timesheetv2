@@ -68,7 +68,7 @@ class BaseController(Generic[ModelType]):
         :return: A list of records.
         """
 
-        response = await self.repository.get_all(skip=skip, limit=limit, join_=join_)
+        response = await self.repository.get_all(skip, limit, join_)
         return response
 
     @Transactional(propagation=Propagation.REQUIRED)

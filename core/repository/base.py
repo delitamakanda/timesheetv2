@@ -3,7 +3,7 @@ from __future__ import annotations
 from functools import reduce
 from typing import Any, Generic, Type, TypeVar
 
-from sqlalchemy import Select, func
+from sqlalchemy import func, Select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql.expression import select
 
@@ -61,7 +61,7 @@ class BaseRepository(Generic[ModelType]):
         """
         Returns the model instance matching the field and value.
 
-        :param unique:
+        :param unique: Return only one result if unique.
         :param field: The field to match.
         :param value: The value to match.
         :param join_: The joins to make.
@@ -71,7 +71,7 @@ class BaseRepository(Generic[ModelType]):
         query = await self._get_by(query, field, value)
         
         if join_ is not None:
-            return await self._all_unique(query)
+            return await self.all_unique(query)
         if unique:
             return await self._one(query)
         
