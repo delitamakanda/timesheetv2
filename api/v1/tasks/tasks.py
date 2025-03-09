@@ -17,8 +17,9 @@ async def get_tasks(request: Request, controller: TaskController = Depends(Facto
     return tasks
 
 @task_router.post("/", response_model=TaskResponse)
-async def create_task(request: Request, task_create: TaskCreate,controller: TaskController = Depends(Factory().get_task_controller)) -> TaskResponse:
+async def create_task(request: Request, task_create: TaskCreate,controller: TaskController = Depends(Factory().get_task_controller), assert_permission: Callable = Depends(Permissions(TaskPermission.create))) -> TaskResponse:
     task = await controller.create(title=task_create.title, description=task_create.description, user_id=request.user.id, project_id=task_create.project_id)
+    assert_permission(resource=task_create)
     return task
 
 @task_router.get("/{task_uuid}", response_model=TaskResponse)
