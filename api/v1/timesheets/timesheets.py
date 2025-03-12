@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+from dateutils import relativedelta
 from typing import Callable
 from fastapi import APIRouter, Depends, Request
 
@@ -43,6 +45,7 @@ async def get_timesheets_by_task_id(task_id: str,
     assert_permission(resource=timesheets)
     return timesheets
 
+
 @timesheet_router.delete("/{timesheet_uuid}", response_model=TimesheetResponse)
 async def delete_timesheet(timesheet_uuid: str, request: Request,
                           controller: TimesheetController = Depends(Factory().get_timesheet_controller),
@@ -50,4 +53,32 @@ async def delete_timesheet(timesheet_uuid: str, request: Request,
     timesheet = await controller.get_by_uuid(timesheet_uuid)
     assert_permission(resource=timesheet)
     await controller.delete(timesheet)
-    
+
+
+@timesheet_router.get("/month/current", response_model=TimesheetResponse)
+async def get_current_month_timesheet(request: Request, controller: TimesheetController = Depends(Factory().get_timesheet_controller), assert_permission: Callable = Depends(Permissions(TimesheetPermission.read))):
+    now = datetime.now()
+    start_of_month = now.replace(day=1)
+    end_of_month = start_of_month + relativedelta(month=1) - timedelta(days=1)
+    timesheet = await controller.get_timesheet_for_period(
+        user_id=request.user.id,
+        start_date=start_of_month,
+        end_date=end_of_month
+    )
+    assert_permission(resource=timesheet)
+    return timesheet
+
+
+@timesheet_router.get("/month/previous", response_model=TimesheetResponse)
+def get_previous_month_timesheet(request: Request, controller: TimesheetController = Depends(Factory().get_timesheet_controller), assert_permission: Callable = Depends(Permissions(TimesheetPermission.read))):
+    pass
+
+
+@timesheet_router.get("/year/current", response_model=TimesheetResponse)
+def get_current_year_timesheet(request: Request, controller: TimesheetController = Depends(Factory().get_timesheet_controller), assert_permission: Callable = Depends(Permissions(TimesheetPermission.read))):
+    pass
+
+
+@timesheet_router.get("/year/{year}", response_model=TimesheetResponse)
+def get_year_timesheet(request: Request, controller: TimesheetController = Depends(Factory().get_timesheet_controller), assert_permission: Callable = Depends(Permissions(TimesheetPermission.read))):
+    pass

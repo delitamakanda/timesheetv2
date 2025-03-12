@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from app.models import Timesheet
 from app.repositories import TimesheetRepository
@@ -28,3 +28,7 @@ class TimesheetController(BaseController[Timesheet]):
     
     async def get_by_task_id(self, task_id: int) -> list[Timesheet]:
         return await self.timesheet_repo.get_by_task_id(task_id)
+    
+    async def get_timesheet_for_period(self, user_id: int, start_date=date, end_date=date) -> list[Timesheet]:
+        # todo
+        pass

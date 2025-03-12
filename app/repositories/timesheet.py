@@ -37,4 +37,8 @@ class TimesheetRepository(BaseRepository[Timesheet]):
         if join_ is not None:
             return await self.all_unique(query)
         return await self._all(query)
+    
+    async def get_timesheet_for_period(self, user_id: int, join_: set[str] | None = None) -> list[Timesheet]:
+        query = await self._query(join_)
+        query = await self._get_by(query, "date")
        
